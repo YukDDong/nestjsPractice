@@ -15,10 +15,20 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  describe('/movies', () => {
+    it('GET', () => {
+      return request(app.getHttpServer()).get('/movies').expect(200).expect([]);
+    });
+
+    it('POST', () => {
+      return request(app.getHttpServer())
+        .post('/movies')
+        .send({
+          title: 'Test',
+          year: 2020,
+          genres: ['공포'],
+        })
+        .expect(201);
+    });
   });
 });
